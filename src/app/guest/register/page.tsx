@@ -32,20 +32,6 @@ export default function RegisterPage() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
 
-  if (isLoaded && !user) {
-    return <RedirectToSignIn />;
-  }
-
-  const userRole = user?.publicMetadata?.role;
-  if (userRole === "student") {
-    return (
-      <div className="p-4">
-        <h1 className="text-xl font-bold">You are already a student!</h1>
-        <p>No need to register again.</p>
-      </div>
-    );
-  }
-
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName ?? "");
@@ -62,6 +48,19 @@ export default function RegisterPage() {
     }
     fetchHouses();
   }, []);
+  if (isLoaded && !user) {
+    return <RedirectToSignIn />;
+  }
+
+  const userRole = user?.publicMetadata?.role;
+  if (userRole === "student") {
+    return (
+      <div className="p-4">
+        <h1 className="text-xl font-bold">You are already a student!</h1>
+        <p>No need to register again.</p>
+      </div>
+    );
+  }
 
   const handleOptionalCourseChange = (courseId: number) => {
     if (optionalCoursesSelected.includes(courseId)) {

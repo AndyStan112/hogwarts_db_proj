@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "next/image";
 const page = () => {
   return (
     <div>
@@ -61,7 +61,7 @@ const page = () => {
               key={house.id}
               className="bg-amber-100 rounded-lg shadow-lg p-4 text-center"
             >
-              <img
+              <Image
                 src={house.img}
                 alt={`${house.name} Crest`}
                 className="w-3/4 mx-auto rounded-lg border-4 border-amber-600 mb-4"
@@ -113,10 +113,11 @@ const page = () => {
               key={idx}
               className="relative group overflow-hidden rounded-lg shadow-lg"
             >
-              <img
+              <Image
                 src={dorm.img}
                 alt={`${dorm.name} Dorms`}
-                className="w-full h-80 object-cover"
+                width={500}
+                height={500}
               />
               <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition duration-300 flex flex-col items-center justify-center text-white">
                 <h3 className="text-lg font-semibold opacity-0 group-hover:opacity-100">
