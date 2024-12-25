@@ -57,12 +57,7 @@ export default function Home() {
               id={`div-link-${house.id}`}
               className="bg-amber-100 rounded-lg shadow-lg p-4 text-center"
             >
-              <Image
-                src={house.img}
-                alt={`${house.name} House`}
-                width={500}
-                height={500}
-              />
+              <img src={house.img} alt={`${house.name} House`} />
               <h3 className="font-semibold text-lg">{house.name}</h3>
               <p className="text-gray-700 mt-2">{house.desc}</p>
             </div>
@@ -98,7 +93,7 @@ export default function Home() {
               key={idx}
               className="bg-amber-100 rounded-lg shadow-lg overflow-hidden"
             >
-              <Image src={facility.img} alt={facility.name} />
+              <img src={facility.img} alt={facility.name} />
               <div className="p-4">
                 <h3 className="font-semibold text-lg text-center">
                   {facility.name}
