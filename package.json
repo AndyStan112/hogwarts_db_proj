@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^5.1.4",
     "@clerk/nextjs": "^6.9.6",
+    "@neondatabase/serverless": "^0.10.4",
     "next": "15.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

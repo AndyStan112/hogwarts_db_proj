@@ -1,7 +1,9 @@
+import { checkAccess } from "@/utils/roles";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default function Navbar() {
+export default async function Navbar() {
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-gray-900 text-white">
       <Link href="/">
@@ -28,13 +30,34 @@ export default function Navbar() {
             </Link>
           </li>
         ))}
+        {(await checkAccess("admin")) && (
+          <li>
+            <Link
+              href="/admin"
+              className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition"
+            >
+              ADMIN
+            </Link>
+          </li>
+        )}
       </ul>
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+      <div className="flex items-center">
+        <SignedOut>
+          <SignInButton mode="modal" />
+        </SignedOut>
+        <SignedIn>
+          <div className="relative w-10 h-10">
+            <ClerkLoading>
+              <div className="absolute top-0 left-0 w-full h-full bg-gray-700 rounded-full animate-pulse" />
+            </ClerkLoading>
+            <ClerkLoaded>
+              <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                <UserButton />
+              </div>
+            </ClerkLoaded>
+          </div>
+        </SignedIn>
+      </div>
     </nav>
   );
 }
