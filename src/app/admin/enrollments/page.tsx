@@ -5,13 +5,20 @@ import { checkRole } from "@/utils/roles";
 import { Roles } from "@/types/globals";
 import { sendEmail } from "@/utils/email";
 
+type User = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+};
+
 export default async function EnrollmentApprovalsPage() {
   if (!(await checkRole("admin"))) {
     redirect("/");
   }
 
   const pendingUsers = await sql`
-    SELECT * FROM students
+    SELECT id,first_name,last_name,email FROM students
     WHERE pending_approval = TRUE
   `;
 
@@ -23,7 +30,7 @@ export default async function EnrollmentApprovalsPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {pendingUsers.map((user) => (
-            <PendingUserCard key={user.id} user={user} />
+            <PendingUserCard key={user.id} user={user as User} />
           ))}
         </div>
       )}
@@ -31,18 +38,16 @@ export default async function EnrollmentApprovalsPage() {
   );
 }
 
-function PendingUserCard({ user }: { user: any }) {
+function PendingUserCard({ user }: { user: User }) {
   async function approveEnrollment(formData: FormData) {
     "use server";
 
     const userId = formData.get("userId") as string;
     const client = await clerkClient();
-    const userRole = (user.publicMetadata.role as Roles) ?? "guest";
 
-    if (userRole === "guest") {
+    if (await checkRole("guest")) {
       await client.users.updateUser(userId, {
         publicMetadata: {
-          ...user.publicMetadata,
           role: "student",
         },
       });
