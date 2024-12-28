@@ -16,7 +16,6 @@ export default async function Navbar() {
       <ul className="flex space-x-6">
         {[
           { href: "/", label: "HOME" },
-          { href: "/about", label: "ABOUT" },
           { href: "/houses", label: "HOUSES" },
           { href: "/blogs", label: "BLOG" },
           { href: "/contact", label: "CONTACT" },
