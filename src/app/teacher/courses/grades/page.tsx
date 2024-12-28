@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, SetStateAction } from "react";
 import { useSearchParams } from "next/navigation";
 
 type RowType = {
@@ -88,10 +88,10 @@ export default function CourseGradesPage() {
           lg: lab,
         };
 
-        setCourseDetails((prevDetails) =>
+        setCourseDetails(((prevDetails) =>
             prevDetails.map((student) =>
               student.sid === updatedStudent.sid ? updatedStudent : student
-            )
+            ) ) as SetStateAction<RowType[]>
           );
           
           
