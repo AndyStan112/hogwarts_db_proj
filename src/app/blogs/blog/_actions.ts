@@ -21,6 +21,7 @@ export async function getClerkData(id: string) {
       fistName: user.firstName,
       lastName: user.lastName,
       username: user.username,
+      imageUrl: user.imageUrl,
     };
   } catch (e: any) {
     return null;
