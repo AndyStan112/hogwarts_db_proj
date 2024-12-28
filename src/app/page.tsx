@@ -22,7 +22,7 @@ export default function Home() {
           <div className="mt-6">
           <a
             href="/guest/register"
-            className="mt-6 bg-[#d1ab59] text-white py-2 px-8 text-lg shadow-lg border border-transparent hover:bg-transparent hover:border-white hover:text-white transition duration-300"
+            className="mt-6 bg-[#d1ab59]  text-black  py-2 px-8 text-lg shadow-lg border border-black hover:bg-transparent hover:border-white hover:text-white transition duration-300"
           >
             Register Now
           </a>
