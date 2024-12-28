@@ -8,6 +8,10 @@ DROP TABLE IF EXISTS students CASCADE;
 DROP TABLE IF EXISTS dorms CASCADE;
 DROP TABLE IF EXISTS houses CASCADE;
 DROP TABLE IF EXISTS teachers CASCADE;
+DROP TABLE IF EXISTS blog_comments CASCADE;
+DROP TABLE IF EXISTS blogs CASCADE;
+DROP TABLE IF EXISTS blog_categories CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
 
 CREATE TABLE teachers (
     id             VARCHAR(255) PRIMARY KEY,
@@ -76,4 +80,34 @@ CREATE TABLE student_course_grades (
     exam3_grade  NUMERIC(5,2),
     lab_grade    NUMERIC(5,2),
     PRIMARY KEY (student_id, course_id)
+);
+
+CREATE TABLE categories (
+    id          SERIAL PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE blogs (
+    id          SERIAL PRIMARY KEY,
+    title       VARCHAR(255) NOT NULL,
+    content     TEXT NOT NULL, 
+    author_id   VARCHAR(255) NOT NULL,
+    created_at  TIMESTAMP DEFAULT NOW()
+   
+);
+
+CREATE TABLE blog_categories (
+    blog_id       INT NOT NULL REFERENCES blogs(id) ON DELETE CASCADE,
+    category_id   INT NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+    PRIMARY KEY (blog_id, category_id)
+);
+
+CREATE TABLE blog_comments (
+    id          SERIAL PRIMARY KEY,
+    blog_id     INT REFERENCES blogs(id) ON DELETE CASCADE,
+    parent_id   INT REFERENCES blog_comments(id) ON DELETE CASCADE,
+    commenter_id VARCHAR(255) NOT NULL,
+    content     TEXT NOT NULL,
+    created_at  TIMESTAMP DEFAULT NOW()
+   
 );
