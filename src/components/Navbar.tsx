@@ -18,7 +18,7 @@ export default async function Navbar() {
           { href: "/", label: "HOME" },
           { href: "/about", label: "ABOUT" },
           { href: "/houses", label: "HOUSES" },
-          { href: "/blog", label: "BLOG" },
+          { href: "/blogs", label: "BLOG" },
           { href: "/contact", label: "CONTACT" },
         ].map((link) => (
           <li key={link.href}>
