@@ -196,41 +196,41 @@ INSERT INTO student_course_grades (
 )
 VALUES
     -- Harry: Gryffindor
-    ('user_2qiqaa3QPOXbOpIg7eTkgXGjACv', 1, 85.0, 88.0, 92.0, 90.0, 88.5), -- Transfiguration
-    ('user_2qiqaa3QPOXbOpIg7eTkgXGjACv', 2, 70.0, 75.0, NULL, 68.0, 71.0), -- Potions
-    ('user_2qiqaa3QPOXbOpIg7eTkgXGjACv', 3, 100.0, 95.0, 95.0, 93.0, 95.8), -- Charms
+    ('user_2qiqaa3QPOXbOpIg7eTkgXGjACv', 1, 85.0, 88.0, 92.0, 90.0), -- Transfiguration
+    ('user_2qiqaa3QPOXbOpIg7eTkgXGjACv', 2, 70.0, 75.0, NULL, 68.0), -- Potions
+    ('user_2qiqaa3QPOXbOpIg7eTkgXGjACv', 3, 100.0, 95.0, 95.0, 93.0), -- Charms
 
     -- Draco: Slytherin
-    ('clerk_student_102', 2, 85.0, 88.0, 93.0, 90.0, 89.5), -- Potions
-    ('clerk_student_102', 3, 60.0, 65.0, NULL, 75.0, 66.0), -- Charms
-    ('clerk_student_102', 8, 85.0, 80.0, NULL, 82.0, 82.3), -- Flying Lessons
+    ('clerk_student_102', 2, 85.0, 88.0, 93.0, 90.0), -- Potions
+    ('clerk_student_102', 3, 60.0, 65.0, NULL, 75.0), -- Charms
+    ('clerk_student_102', 8, 85.0, 80.0, NULL, 82.0), -- Flying Lessons
 
     -- Hermione: Gryffindor
-    ('clerk_student_103', 1, 98.0, 96.0, 100.0, 99.0, 98.8), -- Transfiguration
-    ('clerk_student_103', 2, 95.0, 93.0, NULL, 97.0, 95.0), -- Potions
-    ('clerk_student_103', 4, 100.0, 98.0, 99.0, 98.0, 98.8), -- Defense Against the Dark Arts
+    ('clerk_student_103', 1, 98.0, 96.0, 100.0, 99.0), -- Transfiguration
+    ('clerk_student_103', 2, 95.0, 93.0, NULL, 97.0), -- Potions
+    ('clerk_student_103', 4, 100.0, 98.0, 99.0, 98.0), -- Defense Against the Dark Arts
 
     -- Ron: Gryffindor
-    ('clerk_student_104', 1, 75.0, 78.0, 80.0, 76.0, 77.3), -- Transfiguration
-    ('clerk_student_104', 2, 68.0, 70.0, NULL, 72.0, 70.0), -- Potions
-    ('clerk_student_104', 6, 80.0, 85.0, NULL, 78.0, 81.0), -- Astronomy
+    ('clerk_student_104', 1, 75.0, 78.0, 80.0, 76.0), -- Transfiguration
+    ('clerk_student_104', 2, 68.0, 70.0, NULL, 72.0,), -- Potions
+    ('clerk_student_104', 6, 80.0, 85.0, NULL, 78.0,), -- Astronomy
 
     -- Pansy: Slytherin
-    ('clerk_student_105', 2, 88.0, 85.0, NULL, 87.0, 86.7), -- Potions
-    ('clerk_student_105', 3, 75.0, 78.0, 80.0, 76.0, 77.3), -- Charms
-    ('clerk_student_105', 5, 70.0, 73.0, NULL, 72.0, 71.7), -- Herbology
+    ('clerk_student_105', 2, 88.0, 85.0, NULL, 87.0), -- Potions
+    ('clerk_student_105', 3, 75.0, 78.0, 80.0, 76.0), -- Charms
+    ('clerk_student_105', 5, 70.0, 73.0, NULL, 72.0), -- Herbology
 
     -- Blaise: Slytherin
-    ('clerk_student_106', 2, 82.0, 85.0, 88.0, 84.0, 84.8), -- Potions
-    ('clerk_student_106', 3, 70.0, 72.0, NULL, 74.0, 72.0), -- Charms
-    ('clerk_student_106', 8, 90.0, 88.0, NULL, 89.0, 88.8), -- Flying Lessons
+    ('clerk_student_106', 2, 82.0, 85.0, 88.0, 84.0), -- Potions
+    ('clerk_student_106', 3, 70.0, 72.0, NULL, 74.0), -- Charms
+    ('clerk_student_106', 8, 90.0, 88.0, NULL, 89.0), -- Flying Lessons
 
     -- Luna: Ravenclaw
-    ('clerk_student_107', 1, 95.0, 92.0, 90.0, 93.0, 92.5), -- Transfiguration
-    ('clerk_student_107', 3, 85.0, 88.0, 87.0, 89.0, 87.8), -- Charms
-    ('clerk_student_107', 7, 90.0, 88.0, NULL, 91.0, 89.8), -- History of Magic
+    ('clerk_student_107', 1, 95.0, 92.0, 90.0, 93.0), -- Transfiguration
+    ('clerk_student_107', 3, 85.0, 88.0, 87.0, 89.0), -- Charms
+    ('clerk_student_107', 7, 90.0, 88.0, NULL, 91.0), -- History of Magic
 
     -- Cedric: Hufflepuff
-    ('clerk_student_110', 5, 88.0, 90.0, NULL, 89.0, 89.3), -- Herbology
-    ('clerk_student_110', 8, 85.0, 87.0, 88.0, 86.0, 86.7), -- Flying Lessons
-    ('clerk_student_110', 4, 78.0, 80.0, NULL, 79.0, 78.8); -- Defense Against the Dark Arts
+    ('clerk_student_110', 5, 88.0, 90.0, NULL, 89.0), -- Herbology
+    ('clerk_student_110', 8, 85.0, 87.0, 88.0, 86.0), -- Flying Lessons
+    ('clerk_student_110', 4, 78.0, 80.0, NULL, 79.0); -- Defense Against the Dark Arts

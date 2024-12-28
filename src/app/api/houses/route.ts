@@ -9,7 +9,7 @@ type RowType = {
 };
 export async function GET() {
   try {
-    const rows: RowType[] = (await sql`
+    const rows = (await sql`
       SELECT 
         h.id AS house_id, 
         h.house_name,

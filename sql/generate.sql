@@ -44,6 +44,7 @@ CREATE TABLE students (
 CREATE TABLE courses (
     id          SERIAL PRIMARY KEY,
     course_name VARCHAR(255) NOT NULL,
+    lab ratio NUMERIC(5,2) NOT NULL,
     teacher_id  VARCHAR(255) NOT NULL REFERENCES teachers(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -74,6 +75,5 @@ CREATE TABLE student_course_grades (
     exam2_grade  NUMERIC(5,2),
     exam3_grade  NUMERIC(5,2),
     lab_grade    NUMERIC(5,2),
-    overall_grade NUMERIC(5,2),
     PRIMARY KEY (student_id, course_id)
 );
