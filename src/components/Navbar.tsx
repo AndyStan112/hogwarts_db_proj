@@ -30,6 +30,16 @@ export default async function Navbar() {
             </Link>
           </li>
         ))}
+        {(await checkAccess("student")) && (
+          <li>
+            <Link
+              href="/student"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
+            >
+              Student
+            </Link>
+          </li>
+        )}
         {(await checkAccess("admin")) && (
           <li>
             <Link
