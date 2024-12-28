@@ -41,20 +41,17 @@ export async function POST(request: Request) {
  
     `;
 
-    const houseCourses = await sql`
-      SELECT course_id, is_mandatory
+    const mandatoryCourses = await sql`
+      SELECT course_id
       FROM house_courses
       WHERE house_id = ${houseId}
+      AND is_mandatory = TRUE
     `;
-
-    const mandatoryIds = houseCourses
-      .filter((c: any) => c.is_mandatory)
-      .map((c: any) => c.course_id);
-
+    const mandatoryIds = mandatoryCourses.map((course) => course.course_id);
     const chosenOptionalIds = optionalCourses;
 
     const allCourseIds = [...mandatoryIds, ...chosenOptionalIds];
-
+    console.log(allCourseIds);
     for (const courseId of allCourseIds) {
       await sql`
         INSERT INTO student_courses (student_id, course_id)
@@ -68,10 +65,9 @@ export async function POST(request: Request) {
           exam1_grade, 
           exam2_grade, 
           exam3_grade, 
-          lab_grade, 
-          overall_grade
+          lab_grade
         )
-        VALUES (${clerkId}, ${courseId}, NULL, NULL, NULL, NULL, NULL)
+        VALUES (${clerkId}, ${courseId}, NULL, NULL, NULL, NULL)
       `;
     }
 
