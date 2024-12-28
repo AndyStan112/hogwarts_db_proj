@@ -234,3 +234,85 @@ VALUES
     ('clerk_student_110', 5, 88.0, 90.0, NULL, 89.0), -- Herbology
     ('clerk_student_110', 8, 85.0, 87.0, 88.0, 86.0), -- Flying Lessons
     ('clerk_student_110', 4, 78.0, 80.0, NULL, 79.0); -- Defense Against the Dark Arts
+
+
+INSERT INTO categories (id, category_name) VALUES
+(1, 'Potions'),
+(2, 'Politics'),
+(3, 'Herbology'),
+(4, 'Quidditch'),
+(5, 'Mathematics');
+
+INSERT INTO blogs (id, title, content, author_id) VALUES
+(1, 'Brewing Polyjuice Potion', 
+    '# Brewing Polyjuice Potion: A Step-by-Step Guide\n\n'
+    'Polyjuice Potion is one of the most complex potions in wizardry, allowing the drinker to assume the appearance of another person. This guide will walk you through the process, ingredients, and precautions.\n\n'
+    '---\n\n'
+    '## Ingredients\n'
+    'To brew Polyjuice Potion, you will need:\n\n'
+    '- **Fluxweed** (picked during a full moon)\n'
+    '- **Knotgrass**\n'
+    '- **Lacewing Flies** (stewed for 21 days)\n'
+    '- **Leeches**\n'
+    '- **Powdered Bicorn Horn**\n'
+    '- **Shredded Boomslang Skin**\n'
+    '- **A piece of the person you wish to transform into** (e.g., hair, nail, etc.)\n\n'
+    '> **Note:** Ensure all ingredients are fresh and handled with care.\n\n'
+    '---\n\n'
+    '## Equipment\n'
+    '- A large cauldron\n'
+    '- A stirring rod\n'
+    '- A precise timekeeping device (essential for timing)\n'
+    '- A wand (to cast supplementary spells as needed)\n\n'
+    '---\n\n'
+    '## Brewing Instructions\n\n'
+    '### Phase 1: Preparation\n'
+    '1. **Gather Ingredients**: Ensure all ingredients are accounted for and properly prepared.\n'
+    '2. **Sanitize Equipment**: Clean your cauldron and utensils to avoid contamination.\n'
+    '3. **Set Up Workspace**: Choose a well-ventilated area, free of distractions.\n\n'
+    '### Phase 2: Brewing\n'
+    '1. **Day 1**: Add **lacewing flies** to the cauldron and stew for 21 days.\n'
+    '2. **Day 22**:\n'
+    '    - Add **fluxweed** picked during a full moon.\n'
+    '    - Stir counter-clockwise 7 times.\n'
+    '3. **Day 23**:\n'
+    '    - Add **knotgrass** and **leeches**.\n'
+    '    - Let the mixture bubble for 2 hours, then simmer for 6 more hours.\n'
+    '4. **Day 24**:\n'
+    '    - Add **powdered bicorn horn** and **shredded boomslang skin**.\n'
+    '    - Stir clockwise 5 times, then counter-clockwise 3 times.\n'
+    '5. **Day 30**:\n'
+    '    - Add the final ingredient (a piece of the person you wish to transform into).\n'
+    '    - Simmer for exactly 4 minutes.\n\n'
+    '---\n\n'
+    '## Final Steps\n'
+    '- **Observe the Potion**: The potion should turn a murky brown with swirling patterns. If it does not, double-check your steps.\n'
+    '- **Bottle and Store**: Carefully ladle the potion into a glass vial. Use immediately or store in a dark, cool place for up to 12 hours.\n\n'
+    '---\n\n'
+    '## Precautions\n'
+    '- **Potion Potency**: Polyjuice Potion is unstable and highly potent. Errors in brewing can lead to irreversible side effects.\n'
+    '- **Moral and Legal Implications**: Transforming into another person without consent is ethically questionable and may be illegal.\n'
+    '- **Time Limit**: Each dose lasts precisely 1 hour. Overconsumption can cause severe adverse reactions.\n\n'
+    '---\n\n'
+    '## Troubleshooting\n'
+    '- **Potion Doesn\''t Work**: Check ingredient quality and timing.\n'
+    '- **Unexpected Effects**: Consult a professional potioneer immediately.\n'
+    '- **Potion Taste**: The potion is not meant to taste pleasant. Avoid adding flavoring agents as it may compromise the brew.\n\n'
+    '---\n\n'
+    'With patience and precision, you can master the art of brewing Polyjuice Potion. Remember, this potion requires utmost care and responsibility.\n\n'
+    'Happy brewing, witches and wizards! 🧙‍♀️',
+, 'clerk_student_102'),
+(2, 'Boggarts and How to Conquer Them', 'An overview of Boggarts and effective defense techniques.', 'clerk_student_103'),
+(3, 'Mandrake Roots and Their Healing Properties', 'Uses and care for Mandrakes in Herbology.', 'user_2qihgKsaCcOzimrkjTOQVjPiEjQ');
+
+INSERT INTO blog_categories (blog_id, category_id) VALUES
+(1, 1),
+(1, 2),
+(2, 2),
+(3, 3);
+
+INSERT INTO blog_comments (id, blog_id, parent_id, commenter_id, content) VALUES
+(1, 1, NULL, 'clerk_student_103', 'Great guide! Can you add tips for beginners?'),
+(2, NULL, 1, 'clerk_student_102', 'Sure! Start with small doses of ingredients.'),
+(3, 2, NULL, 'user_2qihgKsaCcOzimrkjTOQVjPiEjQ', 'Riddikulus spell is my favorite for Boggarts!'),
+(4, 3, NULL, 'clerk_student_102', 'Mandrakes are fascinating! Thanks for the insights.');
