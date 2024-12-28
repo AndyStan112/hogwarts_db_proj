@@ -1,18 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Legend,
-} from "recharts";
+import HousePieChart from "./HousePieChart";
+import HouseBarChart from "./HouseBarChart";
 
 type HouseData = {
   house: string;
@@ -28,7 +18,6 @@ export default function HouseChart() {
       try {
         const response = await fetch("/api/houses/count");
         const data: HouseData[] = await response.json();
-        console.log("Fetched Data:", data); // Debug fetched data
         setHouseData(data);
       } catch (error) {
         console.error("Error fetching house data:", error);
@@ -48,13 +37,11 @@ export default function HouseChart() {
 
   const COLORS = ["#AE0001", "#FFDB00", "#000A90", "#2A623D"];
   const totalStudents = houseData.reduce((sum, house) => sum + house.count, 0);
-  const dataWithPercentages = houseData.map((house, index) => ({
+  const dataWithColors = houseData.map((house, index) => ({
     ...house,
     percentage: ((house.count / totalStudents) * 100).toFixed(2),
     color: COLORS[index % COLORS.length],
   }));
-
-  console.log("Data With Percentages:", dataWithPercentages); // Debug transformed data
 
   return (
     <div className="p-8 bg-transparent min-h-screen">
@@ -79,41 +66,9 @@ export default function HouseChart() {
       </div>
       <div className="relative w-full h-[400px] max-w-3xl mx-auto">
         {chartType === "bar" ? (
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={dataWithPercentages}>
-              <XAxis dataKey="house" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="count" fill="#8884d8">
-                {dataWithPercentages.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          <HouseBarChart data={dataWithColors} />
         ) : (
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={dataWithPercentages}
-                dataKey="count"
-                nameKey="house"
-                cx="50%"
-                cy="50%"
-                outerRadius={120}
-                innerRadius={60} // Adjusted for a doughnut style
-                label={({ house, percentage }) =>
-                  `${house}: ${percentage}%`
-                }
-              >
-                {dataWithPercentages.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          <HousePieChart />
         )}
       </div>
     </div>
