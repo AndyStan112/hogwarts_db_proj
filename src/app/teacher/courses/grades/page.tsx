@@ -1,9 +1,7 @@
-import { sql } from "@/db";
-import React from "react";
+"use client";
 
-type Props = {
-  searchParams: { id?: string };
-};
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 type RowType = {
   sid: string;
@@ -16,8 +14,27 @@ type RowType = {
   lg: number | null;
 };
 
-export default async function CourseGradesPage({ searchParams }: Props) {
-  const courseId = searchParams.id;
+export default function CourseGradesPage() {
+  const searchParams = useSearchParams();
+  const courseId = searchParams.get("id");
+  const [courseDetails, setCourseDetails] = useState<RowType[]>([]);
+  const [selectedStudent, setSelectedStudent] = useState<RowType | null>(null);
+
+  useEffect(() => {
+    if (!courseId) return;
+
+    async function fetchCourseDetails() {
+      try {
+        const response = await fetch(`/api/teacher/course-grades?id=${courseId}`);
+        const data: RowType[] = await response.json();
+        setCourseDetails(data);
+      } catch (error) {
+        console.error("Error fetching course details:", error);
+      }
+    }
+
+    fetchCourseDetails();
+  }, [courseId]);
 
   if (!courseId) {
     return (
@@ -28,40 +45,71 @@ export default async function CourseGradesPage({ searchParams }: Props) {
     );
   }
 
-  const teacherId = "clerk_teacher_1"; // Placeholder teacher ID
-  const courseDetails = (await sql`
-    SELECT 
-      s.id as sid,
-      s.first_name as sfn,
-      s.last_name as sln,
-      c.course_name as cn,
-      scg.exam1_grade as e1,
-      scg.exam2_grade as e2,
-      scg.exam3_grade as e3,
-      scg.lab_grade as lg
-    FROM 
-      teachers t
-      JOIN courses c ON t.id = c.teacher_id
-      JOIN student_course_grades scg ON scg.course_id = c.id
-      JOIN students s ON s.id = scg.student_id
-    WHERE t.id = ${teacherId} AND c.id = ${courseId}
-  `) as RowType[];
+  const handleSave = async () => {
+    const exam1 = parseFloat(
+      (document.querySelector<HTMLInputElement>("#exam1")?.value ?? "0")
+    ) || 0; // Fallback to 0 if NaN
+    const exam2 = parseFloat(
+      (document.querySelector<HTMLInputElement>("#exam2")?.value ?? "0")
+    ) || 0;
+    const exam3 = parseFloat(
+      (document.querySelector<HTMLInputElement>("#exam3")?.value ?? "0")
+    ) || 0;
+    const lab = parseFloat(
+      (document.querySelector<HTMLInputElement>("#lab")?.value ?? "0")
+    ) || 0;
+  
+    if (isNaN(exam1) || isNaN(exam2) || isNaN(exam3) || isNaN(lab)) {
+      alert("Please ensure all grades are valid numbers.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("/api/teacher/update-grades", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          studentId: selectedStudent?.sid,
+          courseId,
+          exam1,
+          exam2,
+          exam3,
+          lab,
+        }),
+      });
 
-  if (!courseDetails || courseDetails.length === 0) {
-    return (
-      <div className="p-8">
-        <h1 className="text-3xl font-bold">Course Not Found</h1>
-        <p className="text-gray-500 mt-4">The requested course does not exist.</p>
-      </div>
-    );
-  }
 
-  const course = courseDetails[0];
+      if (response.ok) {
+        const updatedStudent = {
+          ...selectedStudent,
+          e1: exam1,
+          e2: exam2,
+          e3: exam3,
+          lg: lab,
+        };
+
+        setCourseDetails((prevDetails) =>
+            prevDetails.map((student) =>
+              student.sid === updatedStudent.sid ? updatedStudent : student
+            )
+          );
+          
+          
+
+        setSelectedStudent(null);
+        alert("Grades updated successfully!");
+      } else {
+        console.error("Failed to save grades");
+      }
+    } catch (error) {
+      console.error("Error saving grades:", error);
+    }
+  };
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen flex justify-center">
       <div className="w-4/5">
-        <h1 className="text-4xl font-bold mb-8">Grades for {course.cn}</h1>
+        <h1 className="text-4xl font-bold mb-8">Grades</h1>
         <div className="grid grid-cols-6 gap-4 bg-white p-4 rounded-lg shadow-md font-bold">
           <div>First Name</div>
           <div>Last Name</div>
@@ -71,18 +119,83 @@ export default async function CourseGradesPage({ searchParams }: Props) {
           <div>Lab</div>
         </div>
         {courseDetails.map((student) => (
-          <div
+        <div
             key={student.sid}
-            className="grid grid-cols-6 gap-4 border border-t bg-white p-4 hover:bg-gray-200 transition-colors duration-200"
-          >
+            className="grid grid-cols-6 gap-4 border-t bg-white p-4 hover:bg-gray-200 transition-colors duration-200 cursor-pointer"
+            onClick={() => setSelectedStudent(student)}
+        >
             <div>{student.sfn}</div>
             <div>{student.sln}</div>
-            <div>{student.e1 ?? "N/A"}</div>
-            <div>{student.e2 ?? "N/A"}</div>
-            <div>{student.e3 ?? "N/A"}</div>
-            <div>{student.lg ?? "N/A"}</div>
-          </div>
+            <div>{student.e1 !== null ? Number(student.e1).toFixed(2) : "N/A"}</div>
+            <div>{student.e2 !== null ? Number(student.e2).toFixed(2) : "N/A"}</div>
+            <div>{student.e3 !== null ? Number(student.e3).toFixed(2) : "N/A"}</div>
+            <div>{student.lg !== null ? Number(student.lg).toFixed(2) : "N/A"}</div>
+
+        </div>
         ))}
+
+
+        {selectedStudent && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+              <h2 className="text-2xl font-bold mb-4">
+                Edit Grades for {selectedStudent.sfn} {selectedStudent.sln}
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <label>
+                  Exam 1
+                  <input
+                    type="number"
+                    id="exam1"
+                    className="border rounded p-2 w-full"
+                    defaultValue={selectedStudent.e1 ?? ""}
+                  />
+                </label>
+                <label>
+                  Exam 2
+                  <input
+                    type="number"
+                    id="exam2"
+                    className="border rounded p-2 w-full"
+                    defaultValue={selectedStudent.e2 ?? ""}
+                  />
+                </label>
+                <label>
+                  Exam 3
+                  <input
+                    type="number"
+                    id="exam3"
+                    className="border rounded p-2 w-full"
+                    defaultValue={selectedStudent.e3 ?? ""}
+                  />
+                </label>
+                <label>
+                  Lab
+                  <input
+                    type="number"
+                    id="lab"
+                    className="border rounded p-2 w-full"
+                    defaultValue={selectedStudent.lg ?? ""}
+                  />
+                </label>
+              </div>
+              <div className="flex justify-end mt-6">
+                <button
+                  className="bg-gray-200 px-4 py-2 rounded mr-4"
+                  onClick={() => setSelectedStudent(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={handleSave}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
