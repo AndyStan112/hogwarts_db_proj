@@ -18,7 +18,7 @@ export default async function Navbar() {
           { href: "/", label: "HOME" },
           { href: "/about", label: "ABOUT" },
           { href: "/houses", label: "HOUSES" },
-          { href: "/blog", label: "BLOG" },
+          { href: "/blogs", label: "BLOG" },
           { href: "/contact", label: "CONTACT" },
         ].map((link) => (
           <li key={link.href}>
@@ -37,6 +37,16 @@ export default async function Navbar() {
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
             >
               Student
+            </Link>
+          </li>
+        )}
+        {(await checkAccess("teacher")) && (
+          <li>
+            <Link
+              href="/teacher"
+              className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
+            >
+              Teacher
             </Link>
           </li>
         )}
