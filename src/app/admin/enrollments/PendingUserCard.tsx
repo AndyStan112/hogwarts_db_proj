@@ -35,7 +35,7 @@ export function PendingUserCard({ user, role }: { user: User; role: Roles }) {
     await sendEmail({
       to: user.email,
       subject: "Enrollment Denied",
-      body: `Dear ${user.first_name} ${user.last_name},\n\nYour enrollment request has been denied. Please contact support if you have questions.\n\nBest regards,\nHogwarts Admissions`,
+      body: `Dear ${user.first_name} ${user.last_name},\n\nYour enrollment as a ${role}  has been approved. Please contact support if you have questions.\n\nBest regards,\nHogwarts Admissions`,
     });
   }
 
@@ -53,7 +53,7 @@ export function PendingUserCard({ user, role }: { user: User; role: Roles }) {
     await sendEmail({
       to: user.email,
       subject: "Enrollment Denied",
-      body: `Dear ${user.first_name} ${user.last_name},\n\nYour enrollment request has been denied. Please contact support if you have questions.\n\nBest regards,\nHogwarts Admissions`,
+      body: `Dear ${user.first_name} ${user.last_name},\n\nYour enrollment as a ${role}  has been denied. Please contact support if you have questions.\n\nBest regards,\nHogwarts Admissions`,
     });
   }
 
