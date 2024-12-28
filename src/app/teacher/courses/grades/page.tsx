@@ -1,0 +1,1 @@
+/teacher/courses/grades?id={course_id}
