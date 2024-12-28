@@ -27,7 +27,8 @@ export default function Home() {
         </div>
         </div>
       </header>
-      <section className="py-12 bg-gray-50">
+
+      <section className="py-12 w-4/5">
         <div className="max-w-7xl mx-auto bg-amber-100 rounded-lg shadow-lg p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="flex flex-col justify-center">
@@ -45,7 +46,7 @@ export default function Home() {
                 href="https://harrypotter.fandom.com/wiki/Hogwarts_School_of_Witchcraft_and_Wizardry"
                 className="inline-block px-6 py-3 text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg transition duration-300"
               >
-                EXPLORE NOW
+                Contact Us
               </a>
             </div>
             <div>
