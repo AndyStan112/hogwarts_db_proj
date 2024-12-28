@@ -44,7 +44,7 @@ export default async function Navbar() {
           <li>
             <Link
               href="/teacher"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
+              className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
             >
               Teacher
             </Link>

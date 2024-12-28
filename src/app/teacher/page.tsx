@@ -10,7 +10,7 @@ export default function TeacherDashboard() {
           href="/teacher/courses"
           className="block bg-blue-500 text-white px-6 py-4 rounded shadow hover:bg-blue-600 transition"
         >
-          Grades
+          Courses
         </Link>
       </div>
     </div>
