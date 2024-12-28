@@ -30,7 +30,7 @@ const page = () => {
           </p>
         </div>
         <HouseChart></HouseChart>
-        <h1 className="text-xl font-semibold mt-8">Check the houses:</h1>
+        <h1 className="text-xl font-semibold">Check the houses:</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
           {[
             {

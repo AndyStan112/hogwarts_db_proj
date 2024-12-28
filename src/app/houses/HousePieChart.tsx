@@ -37,7 +37,6 @@ const HousePieChart = () => {
 
   return (
     <div className="p-8 bg-transparent min-h-screen flex flex-col items-center">
-      <h2 className="text-2xl font-bold mb-6">Student Distribution by House</h2>
       <ResponsiveContainer width="100%" height={400}>
         <PieChart>
           <Pie
@@ -46,7 +45,7 @@ const HousePieChart = () => {
             nameKey="name"
             cx="50%"
             cy="50%"
-            outerRadius={80}
+            outerRadius={200}
             label={({ name, value }) => `${name}: ${value}`}
           >
             {data.map((entry, index) => (
