@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
+import HouseChart from "./HouseChart";
 const page = () => {
   return (
     <div>
       <section className="py-12 bg-gray-800 text-white text-center">
         <h1 className="text-4xl font-bold mt-12">Houses</h1>
       </section>
-
       <section className="py-12 text-center">
         <h1 className="text-2xl font-semibold">- Our Houses -</h1>
         <h3 className="text-gray-700 mt-2">
@@ -29,6 +29,7 @@ const page = () => {
             all four founders.
           </p>
         </div>
+        <HouseChart></HouseChart>
         <h1 className="text-xl font-semibold mt-8">Check the houses:</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
           {[

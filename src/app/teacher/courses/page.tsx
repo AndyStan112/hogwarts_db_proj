@@ -1,7 +1,10 @@
+//teacher/courses/grades?id={course_id}
+
 import { auth } from "@clerk/nextjs/server";
 import { sql } from "@/db";
 import { redirect } from "next/navigation";
 import { checkAccess } from "@/utils/roles";
+import Link from "next/link";
 
 type RowType = {
   id: string;
@@ -52,13 +55,14 @@ export default async function EnrollmentApprovalsPage() {
             </h2>
             <div className="grid grid-cols-1 gap-4">
               {courses.map((course) => (
-                <div
-                  key={course.index}
-                  className="bg-white p-4 rounded shadow border hover:shadow-lg transition"
-                >
+                 <Link
+                 href={`/teacher/courses/grades/?id=${course.id}`}
+                 key={course.id}
+                 className="bg-white p-4 rounded shadow border hover:shadow-lg transition block"
+               >
                   <span className="font-bold">Course {course.index}: </span>
                   {course.name}
-                </div>
+                  </Link>
               ))}
             </div>
           </>
