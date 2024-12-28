@@ -135,14 +135,6 @@ const page = () => {
           </div>
         </div>
       </section>
-
-      <footer className="py-6 bg-gray-900 text-center text-white">
-        <p>
-          Made with <i className="fa fa-heart-o text-red-500"></i> by M.Iseline
-          <br />
-          E-mail: miriam.iseline@gmail.com
-        </p>
-      </footer>
     </div>
   );
 };
