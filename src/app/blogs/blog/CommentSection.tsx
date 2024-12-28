@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import CommentItem from "./CommentItem";
-
 import { createComment, fetchComments, Comment } from "./_actions";
 
 interface CommentSectionProps {
@@ -25,7 +24,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
     e.preventDefault();
     if (!commentText.trim()) return;
 
-    await createComment(blogId, null, "some-user-id", commentText);
+    await createComment(blogId, null, commentText);
     setCommentText("");
 
     const topLevelComments = await fetchComments(blogId, null);

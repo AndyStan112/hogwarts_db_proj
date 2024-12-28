@@ -1,6 +1,7 @@
 "use server";
 
 import { sql } from "@/db";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 export interface Comment {
   id: number;
   blog_id: number;
@@ -9,8 +10,24 @@ export interface Comment {
   content: string;
   created_at: string;
 }
+
+export async function getClerkData(id: string) {
+  const client = await clerkClient();
+
+  try {
+    const user = await client.users.getUser(id);
+    return {
+      fullName: user.fullName,
+      fistName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+    };
+  } catch (e: any) {
+    return null;
+  }
+}
+
 export async function fetchComments(blogId: number, parentId: number | null) {
-  console.log(blogId, parentId);
   const comments = (await sql`
     SELECT 
       id, 
@@ -33,9 +50,11 @@ export async function fetchComments(blogId: number, parentId: number | null) {
 export async function createComment(
   blogId: number,
   parentId: number | null,
-  commenterId: string,
   content: string
 ) {
+  const { userId } = await auth();
+
+  if (!userId) return;
   await sql`
     INSERT INTO blog_comments (
       blog_id,
@@ -46,7 +65,7 @@ export async function createComment(
     VALUES (
       ${blogId},
       ${parentId},
-      ${commenterId},
+      ${userId},
       ${content}
     )
   `;
