@@ -19,6 +19,7 @@ export default function CourseGradesPage() {
   const courseId = searchParams.get("id");
   const [courseDetails, setCourseDetails] = useState<RowType[]>([]);
   const [selectedStudent, setSelectedStudent] = useState<RowType | null>(null);
+  const [filters, setFilters] = useState({ search: "" });
 
   useEffect(() => {
     if (!courseId) return;
@@ -36,34 +37,17 @@ export default function CourseGradesPage() {
     fetchCourseDetails();
   }, [courseId]);
 
-  if (!courseId) {
-    return (
-      <div className="p-8">
-        <h1 className="text-3xl font-bold">Course Not Found</h1>
-        <p className="text-gray-500 mt-4">No course ID provided in the URL.</p>
-      </div>
-    );
-  }
-
   const handleSave = async () => {
-    const exam1 = parseFloat(
-      (document.querySelector<HTMLInputElement>("#exam1")?.value ?? "0")
-    ) || 0; // Fallback to 0 if NaN
-    const exam2 = parseFloat(
-      (document.querySelector<HTMLInputElement>("#exam2")?.value ?? "0")
-    ) || 0;
-    const exam3 = parseFloat(
-      (document.querySelector<HTMLInputElement>("#exam3")?.value ?? "0")
-    ) || 0;
-    const lab = parseFloat(
-      (document.querySelector<HTMLInputElement>("#lab")?.value ?? "0")
-    ) || 0;
-  
+    const exam1 = parseFloat((document.querySelector<HTMLInputElement>("#exam1")?.value ?? "0")) || 0;
+    const exam2 = parseFloat((document.querySelector<HTMLInputElement>("#exam2")?.value ?? "0")) || 0;
+    const exam3 = parseFloat((document.querySelector<HTMLInputElement>("#exam3")?.value ?? "0")) || 0;
+    const lab = parseFloat((document.querySelector<HTMLInputElement>("#lab")?.value ?? "0")) || 0;
+
     if (isNaN(exam1) || isNaN(exam2) || isNaN(exam3) || isNaN(lab)) {
       alert("Please ensure all grades are valid numbers.");
       return;
     }
-  
+
     try {
       const response = await fetch("/api/teacher/update-grades", {
         method: "POST",
@@ -78,7 +62,6 @@ export default function CourseGradesPage() {
         }),
       });
 
-
       if (response.ok) {
         const updatedStudent = {
           ...selectedStudent,
@@ -88,13 +71,11 @@ export default function CourseGradesPage() {
           lg: lab,
         };
 
-        setCourseDetails(((prevDetails) =>
-            prevDetails.map((student) =>
-              student.sid === updatedStudent.sid ? updatedStudent : student
-            ) ) as SetStateAction<RowType[]>
-          );
-          
-          
+        setCourseDetails((prevDetails) =>
+          prevDetails.map((student) =>
+            student.sid === updatedStudent.sid ? updatedStudent : student
+          )
+        );
 
         setSelectedStudent(null);
         alert("Grades updated successfully!");
@@ -106,10 +87,34 @@ export default function CourseGradesPage() {
     }
   };
 
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFilters((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const filteredDetails = courseDetails.filter(
+    (student) =>
+      student.sfn.toLowerCase().includes(filters.search.toLowerCase()) ||
+      student.sln.toLowerCase().includes(filters.search.toLowerCase())
+  );
+
   return (
     <div className="p-8 bg-gray-100 min-h-screen flex justify-center">
       <div className="w-4/5">
-        <h1 className="text-4xl font-bold mb-8">Grades</h1>
+        <h1 className="text-4xl font-bold mb-4">Grades</h1>
+        {/* Search Bar */}
+        <div className="mb-6 flex justify-start">
+          <input
+            name="search"
+            type="text"
+            placeholder="Search students by name"
+            className="border rounded-lg px-4 py-2 w-1/2"
+            value={filters.search}
+            onChange={handleFilterChange}
+          />
+        </div>
+
+        {/* Table Header */}
         <div className="grid grid-cols-6 gap-4 bg-white p-4 rounded-lg shadow-md font-bold">
           <div>First Name</div>
           <div>Last Name</div>
@@ -118,23 +123,24 @@ export default function CourseGradesPage() {
           <div>Exam 3</div>
           <div>Lab</div>
         </div>
-        {courseDetails.map((student) => (
-        <div
+
+        {/* Table Body */}
+        {filteredDetails.map((student) => (
+          <div
             key={student.sid}
             className="grid grid-cols-6 gap-4 border-t bg-white p-4 hover:bg-gray-200 transition-colors duration-200 cursor-pointer"
             onClick={() => setSelectedStudent(student)}
-        >
+          >
             <div>{student.sfn}</div>
             <div>{student.sln}</div>
             <div>{student.e1 !== null ? Number(student.e1).toFixed(2) : "N/A"}</div>
             <div>{student.e2 !== null ? Number(student.e2).toFixed(2) : "N/A"}</div>
             <div>{student.e3 !== null ? Number(student.e3).toFixed(2) : "N/A"}</div>
             <div>{student.lg !== null ? Number(student.lg).toFixed(2) : "N/A"}</div>
-
-        </div>
+          </div>
         ))}
 
-
+        {/* Modal */}
         {selectedStudent && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
@@ -193,6 +199,7 @@ export default function CourseGradesPage() {
                   Save
                 </button>
               </div>
+              
             </div>
           </div>
         )}
