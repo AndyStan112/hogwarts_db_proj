@@ -36,14 +36,14 @@ const Gryffindor = () => {
       <div className="w-full max-w-5xl mt-20">
         <div className="relative flex justify-center mb-8 items-center">
           <div className="relative group flex flex-col items-center">
-            <div className="relative w-64 h-64 rounded-full overflow-hidden shadow-xl border-4 border-red-600 bg-gradient-to-br from-yellow-50 to-red-100">
+            <div className="relative w-64 h-64 rounded-full overflow-hidden shadow-xl border-4 border-red-700 bg-gradient-to-br from-yellow-50 to-red-100">
               <img
                 src="/images/Gryffindor_Crest.jpeg"
                 alt="Gryffindor Crest"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               />
             </div>
-            <div className="absolute bottom-0 bg-red-600 text-white text-lg font-semibold px-4 py-2 rounded-lg shadow-md transition-opacity duration-300 group-hover:opacity-90 group-hover:translate-y-1">
+            <div className="absolute bottom-0 bg-red-700 text-white text-lg font-semibold px-4 py-2 rounded-lg shadow-md transition-opacity duration-300 group-hover:opacity-90 group-hover:translate-y-1">
               Gryffindor Crest
             </div>
           </div>

@@ -38,7 +38,7 @@ const Hufflepuff = () => {
           <div className="relative group flex flex-col items-center">
             <div className="relative w-64 h-64 rounded-full overflow-hidden shadow-xl border-4 border-yellow-500 bg-gradient-to-br from-yellow-50 to-yellow-200">
               <img
-                src="/images/Hufflepuff_Crest.jpeg"
+                src="/images/HufflepuffCrest.jpeg"
                 alt="Hufflepuff Crest"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               />
