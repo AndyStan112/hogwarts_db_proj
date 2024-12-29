@@ -134,7 +134,7 @@ const Ravenclaw = () => {
                 Ravenclaw
               </h3>
               <p className="text-lg font-light text-white drop-shadow-sm mt-2">
-                Knowledge is the key to success.
+              Endless things to explore here.
               </p>
             </div>
           </div>
