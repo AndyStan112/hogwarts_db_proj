@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 
 const Gryffindor = () => {
@@ -17,14 +18,18 @@ const Gryffindor = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Fetched data:", data); // Debugging log
+        console.log("Fetched data:", data);
         setHierarchy(data);
       })
       .catch((error) => {
         console.error("Failed to fetch Gryffindor hierarchy:", error);
+        setHierarchy({
+          headOfHouse: "Error fetching data",
+          ghost: "Error fetching data",
+          prefects: [],
+        });
       });
   }, []);
-  
 
   return (
     <div className="bg-yellow-50 p-6">
@@ -33,7 +38,7 @@ const Gryffindor = () => {
         <img
           src="/images/Gryffindor_Crest.jpeg"
           alt="Gryffindor Banner"
-          className=" h-80 object-cover rounded-lg shadow-md"
+          className="h-80 object-cover rounded-lg shadow-md"
         />
       </div>
 
@@ -43,7 +48,6 @@ const Gryffindor = () => {
         <p className="mt-4 text-lg">
           The bravest of wizards are placed right in this house.
         </p>
-
       </div>
 
       {/* Hierarchy Section */}
@@ -68,22 +72,24 @@ const Gryffindor = () => {
             {hierarchy.prefects.length > 0 ? (
               <ul>
                 {hierarchy.prefects.map((prefect, index) => (
-                  <li key={index}>{prefect.name}</li>
+                  <li key={index}>{prefect}</li>
                 ))}
               </ul>
             ) : (
-              <p>Loading...</p>
+              <p>No prefects available.</p>
             )}
           </div>
         </div>
       </div>
+
+      {/* Dormitory Image */}
       <div className="mt-6">
-          <img
-            src="/images/gdorms.jpg"
-            alt="Gryffindor Dormitory"
-            className="w-full max-w-3xl mx-auto rounded-lg shadow-md"
-          />
-        </div>
+        <img
+          src="/images/gdorms.jpg"
+          alt="Gryffindor Dormitory"
+          className="w-full max-w-3xl mx-auto rounded-lg shadow-md"
+        />
+      </div>
     </div>
   );
 };
