@@ -316,3 +316,9 @@ INSERT INTO blog_comments (id, blog_id, parent_id, commenter_id, content) VALUES
 (2, NULL, 1, 'clerk_student_102', 'Sure! Start with small doses of ingredients.'),
 (3, 2, NULL, 'user_2qihgKsaCcOzimrkjTOQVjPiEjQ', 'Riddikulus spell is my favorite for Boggarts!'),
 (4, 3, NULL, 'clerk_student_102', 'Mandrakes are fascinating! Thanks for the insights.');
+
+INSERT INTO ghosts (id, ghost_mortal_name, ghost_name) VALUES
+(1, 'Sir Nicholas de Mimsy-Porpington', 'Nearly Headless Nick'),
+(2, 'The Fat Friar', NULL),
+(3, 'Helena Ravenclaw', 'The Grey Lady'),
+(4, 'The Bloody Baron', NULL);

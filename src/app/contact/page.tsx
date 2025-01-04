@@ -1,35 +1,74 @@
-import React from "react";
+"use client";
 
-const page = () => {
+import React, { useEffect, useState } from "react";
+
+export default function FormPage() {
+  const [apiData, setApiData] = useState(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    user_email: "",
+    subject: "",
+    message: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api/contact");
+      const data = await response.json();
+      setApiData(data);
+    };
+    fetchData();
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", user_email: "", subject: "", message: "" });
+      } else {
+        const error = await response.json();
+        alert(error.error || "Failed to send message.");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("An error occurred while sending your message.");
+    }
+  };
+
   return (
     <div>
       <section className="py-12 bg-gray-800 text-white text-center">
         <h1 className="text-4xl font-bold mt-12">Contact Us</h1>
       </section>
 
-      <section className="py-12 px-6">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2264.7000968073567!2d-1.708495323508388!3d55.41558277296122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487e00e0ed23bc0d%3A0x8783a98b290f641!2sCastelul%20Alnwick!5e0!3m2!1sro!2sro!4v1726884250275!5m2!1sro!2sro"
-          width="100%"
-          height="450"
-          className="rounded-lg shadow-lg border-0 mb-6"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </section>
-
       <section className="py-12 px-6 bg-gray-50">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <div className="flex items-start space-x-4 mb-6">
-              <i className="fa fa-home text-2xl text-yellow-600"></i>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+        
+          <div className="space-y-8">
+            <div className="flex items-start space-x-4">
+              <i className="fa fa-home text-3xl text-yellow-600"></i>
               <div>
                 <h5 className="text-lg font-semibold">Castle Alnwick</h5>
                 <p className="text-gray-600">Alnwick NE66 1NQ, UK</p>
               </div>
             </div>
-            <div className="flex items-start space-x-4 mb-6">
-              <i className="fa fa-envelope-o text-2xl text-yellow-600"></i>
+            <div className="flex items-start space-x-4">
+              <i className="fa fa-envelope-o text-3xl text-yellow-600"></i>
               <div>
                 <h5 className="text-lg font-semibold">
                   mmcgonagall@hogwarts.edu.ac.uk
@@ -38,9 +77,51 @@ const page = () => {
               </div>
             </div>
           </div>
+
+          <div>
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your name (required)"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring focus:ring-yellow-600"
+              />
+              <input
+                type="email"
+                name="user_email"
+                placeholder="Enter your e-mail (required)"
+                value={formData.user_email}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring focus:ring-yellow-600"
+              />
+              <input
+                type="text"
+                name="subject"
+                placeholder="Enter your subject (required)"
+                value={formData.subject}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring focus:ring-yellow-600"
+              />
+              <textarea
+                name="message"
+                placeholder="Message"
+                rows={5}
+                value={formData.message}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring focus:ring-yellow-600"
+              ></textarea>
+              <button
+                type="submit"
+                className="px-6 py-3 border-2 border-yellow-600 text-yellow-600 font-semibold rounded-md hover:bg-yellow-600 hover:text-white transition duration-300"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
         </div>
       </section>
     </div>
   );
-};
-export default page;
+}
