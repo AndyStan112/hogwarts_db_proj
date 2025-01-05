@@ -10,7 +10,7 @@ const Gryffindor = () => {
   });
 
   useEffect(() => {
-    fetch("/api/houses/gryffindor")
+    fetch("/api/houses/house?name=Gryffindor")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

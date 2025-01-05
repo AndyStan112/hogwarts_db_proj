@@ -10,7 +10,7 @@ const Ravenclaw = () => {
   });
 
   useEffect(() => {
-    fetch("/api/houses/ravenclaw")
+    fetch("/api/houses/house?name=Ravenclaw")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

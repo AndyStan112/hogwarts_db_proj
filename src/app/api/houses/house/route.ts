@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/db";
 
 type HierarchyType = {
@@ -7,14 +7,18 @@ type HierarchyType = {
   prefects: string[];
 };
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+
+    const url = new URL(req.url);
+    const houseName = await url.searchParams.get("name");
+    console.log(houseName)
   try {
 
     const headOfHouseQuery = await sql`
       SELECT CONCAT(T.FIRST_NAME, ' ', T.LAST_NAME) AS name
       FROM TEACHERS T
       JOIN HOUSES H ON T.ID = H.HEAD_TEACHER_ID
-      WHERE H.HOUSE_NAME = 'Slytherin'
+      WHERE H.HOUSE_NAME = ${houseName}
     `;
     const headOfHouse = headOfHouseQuery[0]?.name || null;
 
@@ -23,7 +27,7 @@ export async function GET() {
       SELECT CONCAT(G.GHOST_NAME, ' (', G.GHOST_MORTAL_NAME,')') AS name
       FROM GHOSTS G
       JOIN HOUSES H ON G.ID = H.GHOST_ID
-      WHERE H.HOUSE_NAME = 'Slytherin'
+      WHERE H.HOUSE_NAME = ${houseName}
     `;
     const ghost = ghostQuery[0]?.name || null;
 
@@ -40,13 +44,13 @@ export async function GET() {
           JOIN courses c ON scg.course_id = c.id
           GROUP BY scg.student_id
       ) sub ON sub.student_id = s.id
-      WHERE s.house_id = (SELECT id FROM houses WHERE house_name = 'Slytherin')
+      WHERE s.house_id = (SELECT id FROM houses WHERE HOUSE_NAME= ${houseName})
       ORDER BY sub.max_grade DESC
       LIMIT 2
     `;
 
     console.log(prefectsQuery)
-    const prefects = prefectsQuery.map((prefect: { name: string }) => prefect.name) || [];
+    const prefects = prefectsQuery.map((prefect) => prefect.name) || [];
 
     const hierarchy: HierarchyType = {
       headOfHouse,
@@ -56,7 +60,7 @@ export async function GET() {
 
     return NextResponse.json(hierarchy);
   } catch (error: any) {
-    console.error("Error in GET /api/houses/slytherin:", error);
+    console.error("Error in GET /api/houses/gryffindor:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
