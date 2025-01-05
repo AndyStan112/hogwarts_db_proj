@@ -18,7 +18,7 @@ export async function getClerkData(id: string) {
     const user = await client.users.getUser(id);
     return {
       fullName: user.fullName,
-      fistName: user.firstName,
+      firstName: user.firstName,
       lastName: user.lastName,
       username: user.username,
       imageUrl: user.imageUrl,
