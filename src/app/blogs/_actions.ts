@@ -3,16 +3,18 @@ import { sql } from "@/db";
 
 export type Category = {
   name: string;
-  id: number;
+  id: number; 
 };
 
-export type Blog = {
+export interface Blog {
   id: number;
   title: string;
   content: string;
   author_id: string;
   created_at: string;
-};
+  categories: string | null;
+}
+
 
 export async function fetchCategories() {
   const categories = (await sql`
@@ -54,7 +56,7 @@ export async function fetchBlogs(filters: BlogFilters) {
       AND
       (
         ${category} = ''
-        OR CAST(c.id AS TEXT) = ${category}
+        OR CAST(c.category_name AS TEXT) = ${category}
       )
       AND
       (

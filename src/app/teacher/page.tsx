@@ -12,7 +12,14 @@ export default function TeacherDashboard() {
         >
           Courses
         </Link>
+        <Link
+          href="/blogs/post"
+          className="block bg-cyan-500 text-white px-6 py-4 rounded shadow hover:bg-blue-600 transition"
+        >
+          Post a blog
+        </Link>
       </div>
+      
     </div>
   );
 }
