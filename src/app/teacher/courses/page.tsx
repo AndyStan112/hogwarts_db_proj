@@ -19,8 +19,8 @@ export default async function EnrollmentApprovalsPage() {
   if (!(await checkAccess("teacher")) || !sessionClaims) {
     redirect("/");
   }
-  // const id = sessionClaims.sub;
-  const id = "clerk_teacher_1";
+   const id = sessionClaims.sub;
+
   const rows = (await sql`
     SELECT 
       t.id AS id,

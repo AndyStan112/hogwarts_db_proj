@@ -102,7 +102,7 @@ export default function CourseGradesPage() {
     <div className="p-8 bg-gray-100 min-h-screen flex justify-center">
       <div className="w-4/5">
         <h1 className="text-4xl font-bold mb-4">Grades</h1>
-        {/* Search Bar */}
+
         <div className="mb-6 flex justify-start">
           <input
             name="search"
@@ -114,7 +114,7 @@ export default function CourseGradesPage() {
           />
         </div>
 
-        {/* Table Header */}
+
         <div className="grid grid-cols-6 gap-4 bg-white p-4 rounded-lg shadow-md font-bold">
           <div>First Name</div>
           <div>Last Name</div>
@@ -124,7 +124,7 @@ export default function CourseGradesPage() {
           <div>Lab</div>
         </div>
 
-        {/* Table Body */}
+
         {filteredDetails.map((student) => (
           <div
             key={student.sid}
@@ -140,7 +140,7 @@ export default function CourseGradesPage() {
           </div>
         ))}
 
-        {/* Modal */}
+
         {selectedStudent && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
