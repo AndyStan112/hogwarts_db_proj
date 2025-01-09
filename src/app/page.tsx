@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+
+
 export default function Home() {
   return (
     <div className="flex flex-col items-center w-full">
@@ -43,7 +45,7 @@ export default function Home() {
                 lifelong friendships and extraordinary adventures.
               </p>
               <a
-                href="https://harrypotter.fandom.com/wiki/Hogwarts_School_of_Witchcraft_and_Wizardry"
+                href="/contact"
                 className="inline-block px-6 py-3 text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg transition duration-300"
               >
                 Contact Us
