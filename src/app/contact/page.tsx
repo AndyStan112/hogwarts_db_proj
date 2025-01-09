@@ -11,14 +11,7 @@ export default function FormPage() {
     message: "",
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api/contact");
-      const data = await response.json();
-      setApiData(data);
-    };
-    fetchData();
-  }, []);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
