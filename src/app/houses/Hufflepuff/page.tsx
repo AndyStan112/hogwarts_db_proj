@@ -5,10 +5,11 @@ import React, { useEffect, useState } from "react";
 
 const Hufflepuff = () => {
   const [hierarchy, setHierarchy] = useState({
-    headOfHouse: null,
-    ghost: null,
-    prefects: [],
+    headOfHouse: "",
+    ghost: "",
+    prefects: [] as string[],
   });
+  
 
   useEffect(() => {
     fetch("/api/houses/house?name=Hufflepuff")
