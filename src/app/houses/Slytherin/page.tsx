@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import React, { useEffect, useState } from "react";
 
@@ -37,7 +38,7 @@ const Slytherin = () => {
         <div className="relative flex justify-center mb-8 items-center">
           <div className="relative group flex flex-col items-center">
             <div className="relative w-64 h-64 rounded-full overflow-hidden shadow-xl border-4 border-green-700 bg-gradient-to-br from-green-50 to-green-200">
-              <img
+              <Image
                 src="/images/SlytherinCrest.jpeg"
                 alt="Slytherin Crest"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
@@ -125,7 +126,7 @@ const Slytherin = () => {
 
         <div className="mt-12 flex justify-center">
           <div className="relative group w-80 h-80 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
-            <img
+            <Image
               src="/images/sdorms"
               alt="Slytherin Dormitory"
               className="w-full h-full object-cover"

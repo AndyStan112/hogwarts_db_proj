@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import React, { useEffect, useState } from "react";
 
@@ -37,7 +38,7 @@ const Gryffindor = () => {
         <div className="relative flex justify-center mb-8 items-center">
           <div className="relative group flex flex-col items-center">
             <div className="relative w-64 h-64 rounded-full overflow-hidden shadow-xl border-4 border-red-700 bg-gradient-to-br from-yellow-50 to-red-100">
-              <img
+              <Image
                 src="/images/Gryffindor_Crest.jpeg"
                 alt="Gryffindor Crest"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
@@ -124,7 +125,7 @@ const Gryffindor = () => {
 
         <div className="mt-12 flex justify-center">
           <div className="relative group w-80 h-80 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
-            <img
+            <Image
               src="/images/gdorms.jpg"
               alt="Gryffindor Dormitory"
               className="w-full h-full object-cover"

@@ -48,7 +48,7 @@ const page = () => {
             ].map((house) => (
               <a className="bg-amber-100 rounded-lg shadow-lg p-4 text-center" href = {`/houses/${house.id}`} key={house.id}>
              
-              <img
+              <Image
                 src={house.img}
                 alt={`${house.name} Crest`}
                 className="w-3/4 mx-auto rounded-lg border-4 border-amber-600 mb-4"
@@ -77,7 +77,7 @@ const page = () => {
 
             <p className="-mt-18">
               The Sorting Hat, a magical and ancient artifact, is responsible for
-              determining the house that best suits each student’s qualities and
+              determining the house that best suits each student's qualities and
               potential. With a history dating back over a thousand years, the
               Sorting Hat was originally owned by one of the founders of Hogwarts,
               Godric Gryffindor, and has been imbued with the wisdom and ideals of
