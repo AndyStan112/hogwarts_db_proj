@@ -1,37 +1,62 @@
-"use client";
+
+import { sql } from "@/db";
 import Image from "next/image";
 
 import React, { useEffect, useState } from "react";
 
-const Gryffindor = () => {
-  const [hierarchy, setHierarchy] = useState({
-    headOfHouse: "",
-    ghost: "",
-    prefects: [] as string[],
-  });
-  
+type HierarchyType = {
+  headOfHouse: string | null;
+  ghost: string | null;
+  prefects: string[];
+};
+const houseName="Gryffindor";
 
-  useEffect(() => {
-    fetch("/api/houses/house?name=Gryffindor")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Fetched data:", data);
-        setHierarchy(data);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch Gryffindor hierarchy:", error);
-        setHierarchy({
-          headOfHouse: "Error fetching data",
-          ghost: "Error fetching data",
-          prefects: [],
-        });
-      });
-  }, []);
+    
+
+const Gryffindor = async() => {
+const headOfHouseQuery = await sql`
+  SELECT CONCAT(T.FIRST_NAME, ' ', T.LAST_NAME) AS name
+  FROM TEACHERS T
+  JOIN HOUSES H ON T.ID = H.HEAD_TEACHER_ID
+  WHERE H.HOUSE_NAME = ${houseName}
+`;
+const headOfHouse = headOfHouseQuery[0]?.name || null;
+
+
+const ghostQuery = await sql`
+  SELECT CONCAT(G.GHOST_NAME, ' (', G.GHOST_MORTAL_NAME,')') AS name
+  FROM GHOSTS G
+  JOIN HOUSES H ON G.ID = H.GHOST_ID
+  WHERE H.HOUSE_NAME = ${houseName}
+`;
+const ghost = ghostQuery[0]?.name || null;
+
+
+const prefectsQuery = await sql`
+  SELECT CONCAT(s.last_name, ' ', s.first_name) AS name
+  FROM students s
+  JOIN (
+      SELECT scg.student_id, MAX(
+          GREATEST(scg.exam1_grade, scg.exam2_grade, scg.exam3_grade) * (1 - c.lab_ratio) 
+          + scg.lab_grade * c.lab_ratio
+      ) AS max_grade
+      FROM student_course_grades scg
+      JOIN courses c ON scg.course_id = c.id
+      GROUP BY scg.student_id
+  ) sub ON sub.student_id = s.id
+  WHERE s.house_id = (SELECT id FROM houses WHERE HOUSE_NAME= ${houseName})
+  ORDER BY sub.max_grade DESC
+  LIMIT 2
+`;
+
+const prefects = prefectsQuery.map((prefect) => prefect.name) || [];
+
+const hierarchy: HierarchyType = {
+  headOfHouse,
+  ghost,
+  prefects,
+};
+  
 
   return (
     <div className="bg-yellow-50 p-6 flex flex-col items-center min-h-screen">
@@ -39,7 +64,7 @@ const Gryffindor = () => {
         <div className="relative flex justify-center mb-8 items-center">
           <div className="relative group flex flex-col items-center">
             <div className="relative w-64 h-64 rounded-full overflow-hidden shadow-xl border-4 border-red-700 bg-gradient-to-br from-yellow-50 to-red-100">
-              <Image
+              <img
                 src="/images/Gryffindor_Crest.jpeg"
                 alt="Gryffindor Crest"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
@@ -126,7 +151,7 @@ const Gryffindor = () => {
 
         <div className="mt-12 flex justify-center">
           <div className="relative group w-80 h-80 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
-            <Image
+            <img
               src="/images/gdorms.jpg"
               alt="Gryffindor Dormitory"
               className="w-full h-full object-cover"
@@ -143,7 +168,7 @@ const Gryffindor = () => {
         </div>
             <div>
             <p className="text-md text-gray-700 mt-10">
-            Gryffindor’s dormitories are located in one of the highest towers of
+            Gryffindor's dormitories are located in one of the highest towers of
             Hogwarts, offering breathtaking views of the castle grounds. The
             entrance is concealed behind the portrait of the Fat Lady, who
             requires a password for entry. The common room is warm and inviting,

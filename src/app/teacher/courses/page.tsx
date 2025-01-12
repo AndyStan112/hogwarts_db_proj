@@ -14,7 +14,7 @@ type RowType = {
   course_id: string;
 };
 
-export default async function EnrollmentApprovalsPage() {
+export default async function TeacherCoursesPage() {
   const { sessionClaims } = await auth();
   if (!(await checkAccess("teacher")) || !sessionClaims) {
     redirect("/");
@@ -60,7 +60,7 @@ export default async function EnrollmentApprovalsPage() {
                  key={course.id}
                  className="bg-white p-4 rounded shadow border hover:shadow-lg transition block"
                >
-                  <span className="font-bold">Course {course.index}: </span>
+                  <b>Course {course.index}: </b>
                   {course.name}
                   </Link>
               ))}

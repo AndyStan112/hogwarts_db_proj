@@ -48,7 +48,7 @@ const page = () => {
             ].map((house) => (
               <a className="bg-amber-100 rounded-lg shadow-lg p-4 text-center" href = {`/houses/${house.id}`} key={house.id}>
              
-              <Image
+              <img
                 src={house.img}
                 alt={`${house.name} Crest`}
                 className="w-3/4 mx-auto rounded-lg border-4 border-amber-600 mb-4"

@@ -62,7 +62,7 @@ export default function CourseGradesPage() {
         }),
       });
 
-      if (response.ok) {
+           if (response.ok) {
         const updatedStudent: RowType = {
           ...selectedStudent!,
           e1: exam1,

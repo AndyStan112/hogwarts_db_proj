@@ -1,4 +1,16 @@
 import { sql } from "@/db";
+import { NextResponse } from "next/server";
+
+type RowType = {
+  sid: string;
+  sfn: string;
+  sln: string;
+  cn: string;
+  e1: number | null;
+  e2: number | null;
+  e3: number | null;
+  lg: number | null;
+};
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -28,13 +40,13 @@ export async function GET(req: Request) {
         JOIN student_course_grades scg ON scg.course_id = c.id
         JOIN students s ON s.id = scg.student_id
       WHERE c.id = ${courseId}
-    `;
+    ` as RowType[];
 
-    return new Response(JSON.stringify(data), { status: 200 });
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching course data:", error);
-    return new Response(
-      JSON.stringify({ error: "Internal Server Error" }),
+    return  NextResponse.json(
+     { "error": error },
       { status: 500 }
     );
   }

@@ -14,7 +14,7 @@ type RowType = {
   l: number | null;
   lr: number;
 };
-export default async function EnrollmentApprovalsPage() {
+export default async function StudetCoursesPage() {
   const { sessionClaims } = await auth();
   if (!(await checkAccess("student")) || !sessionClaims) {
     redirect("/");
