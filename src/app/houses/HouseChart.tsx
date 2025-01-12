@@ -68,7 +68,7 @@ export default function HouseChart() {
         {chartType === "bar" ? (
           <HouseBarChart data={dataWithColors} />
         ) : (
-          <HousePieChart />
+          <HousePieChart data={dataWithColors}  />
         )}
       </div>
     </div>

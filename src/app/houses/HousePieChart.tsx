@@ -3,44 +3,30 @@
 import { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
-const HousePieChart = () => {
   const COLORS = ["#AE0001", "#FFDB00", "#000A90", "#2A623D"]; 
-  const [data, setData] = useState<{ name: string; value: number }[]>([]);
 
-  useEffect(() => {
-    async function fetchHouseData() {
-      try {
-        const response = await fetch("/api/houses/count");
-        const fetchedData = await response.json();
-        const transformedData = fetchedData.map((house: { house: string; count: string }) => ({
-          name: house.house,
-          value: parseInt(house.count, 10),
-        }));
-        setData(transformedData);
-      } catch (error) {
-        console.error("Error fetching house data:", error);
-      }
-    }
+  type PieChartProps = {
+    data: { house: string; count: number; color: string }[];
+  };
 
-    fetchHouseData();
-  }, []);
 
-  console.log(data);
   
-  if (data.length === 0) {
-    return (
-      <div className="p-8 bg-transparent min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Loading or no data available...</p>
-      </div>
-    );
-  }
+  const HousePieChart = ({ data }: PieChartProps) => {
 
-  return (
+
+    console.log(data);
+    const transformedData = data.map((house: { house: string; count: number; color: string }) => ({
+  name: house.house,
+  value: house.count
+}));
+
+    
+    return (
     <div className="p-8 bg-transparent min-h-screen flex flex-col items-center">
       <ResponsiveContainer width="100%" height={400}>
         <PieChart>
           <Pie
-            data={data}
+            data={transformedData}
             dataKey="value"
             nameKey="name"
             cx="50%"

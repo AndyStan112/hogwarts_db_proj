@@ -6,7 +6,7 @@ export async function GET() {
     const houseCounts = await sql`
       SELECT 
         h.house_name AS house,
-        COUNT(s.id) AS count
+        COUNT(s.id)::int AS count
       FROM 
         houses h
       LEFT JOIN 
@@ -16,7 +16,6 @@ export async function GET() {
       ORDER BY 
         h.house_name;
     `;
-
     return NextResponse.json(houseCounts);
   } catch (error) {
     console.error("Error fetching house counts:", error);
