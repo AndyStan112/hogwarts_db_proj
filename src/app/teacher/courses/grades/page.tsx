@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, SetStateAction } from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 type RowType = {
@@ -63,12 +63,16 @@ export default function CourseGradesPage() {
       });
 
       if (response.ok) {
-        const updatedStudent = {
-          ...selectedStudent,
+        const updatedStudent: RowType = {
+          ...selectedStudent!,
           e1: exam1,
           e2: exam2,
           e3: exam3,
           lg: lab,
+          sid: selectedStudent?.sid ?? "",
+          sfn: selectedStudent?.sfn ?? "",
+          sln: selectedStudent?.sln ?? "",
+          cn: selectedStudent?.cn ?? "",
         };
 
         setCourseDetails((prevDetails) =>
@@ -114,7 +118,6 @@ export default function CourseGradesPage() {
           />
         </div>
 
-
         <div className="grid grid-cols-6 gap-4 bg-white p-4 rounded-lg shadow-md font-bold">
           <div>First Name</div>
           <div>Last Name</div>
@@ -123,7 +126,6 @@ export default function CourseGradesPage() {
           <div>Exam 3</div>
           <div>Lab</div>
         </div>
-
 
         {filteredDetails.map((student) => (
           <div
@@ -139,7 +141,6 @@ export default function CourseGradesPage() {
             <div>{student.lg !== null ? Number(student.lg).toFixed(2) : "N/A"}</div>
           </div>
         ))}
-
 
         {selectedStudent && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -199,7 +200,6 @@ export default function CourseGradesPage() {
                   Save
                 </button>
               </div>
-              
             </div>
           </div>
         )}
